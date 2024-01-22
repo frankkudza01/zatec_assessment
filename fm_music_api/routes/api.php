@@ -14,12 +14,11 @@ use App\Http\Controllers\Albums\AlbumController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('/login/user/', [App\Http\Controllers\Authentication\AuthController::class, 'login'])->name('/login/user/');
+Route::get('/login/google/', [App\Http\Controllers\Authentication\AuthController::class, 'redirectToGoogle'])->name('/login/google/');
 
-Route::get('/login/user/', [App\Http\Controllers\Authentication\AuthController::class, 'redirectToGoogle'])->name('/login/user/');
-Route::get('/login/google/callback/', [App\Http\Controllers\Authentication\AuthController::class, 'handleGoogleCallback'])->name('/login/google/callback/');
 
-
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::prefix('artists')->group(function () {
         Route::get('/', [ArtistController::class, 'index']);
         Route::post('/', [ArtistController::class, 'store']);
@@ -42,6 +41,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/favorite/albums', [AlbumController::class, 'favoriteAlbum']);
     Route::get('/favorite/albums', [AlbumController::class, 'getFavoriteAlbums']);
     Route::delete('/favorite/albums/{id}', [AlbumController::class, 'unfavoriteAlbum']);
+
+    Route::get('/login/google/callback/', [App\Http\Controllers\Authentication\AuthController::class, 'handleGoogleCallback'])->name('/login/google/callback/');
+
 
     Route::get('/get_user/data/', [App\Http\Controllers\Authentication\AuthController::class, 'getUser'])->name('/get_user/data/');
     Route::post('/logout/user/', [App\Http\Controllers\Authentication\AuthController::class, 'logout'])->name('/logout/user/');

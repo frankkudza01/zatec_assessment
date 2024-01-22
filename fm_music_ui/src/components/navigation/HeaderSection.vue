@@ -103,20 +103,33 @@ import axios from 'axios';
             return {
                 LogoPath: icon,
                 divWidth: 40,
-                user: null,
-
             };
         },
 
-        created() {
-            axios.get('http://127.0.0.1:8000/api/get_user/data/')
-            .then(response => {
-                this.user = response.data.user;
-            })
-            .catch(error => {
-                console.error(error);
+        computed: {
+            user() {
+               return this.$store.state.user;
+            },
+         },
+         mounted() {
+            this.fetchUser();
+         },
+
+         methods: {
+            fetchUser() {
+               // Make an API request to fetch the user data using the token from the store
+               const token = this.$store.state.token;
+               axios
+               .get('http://127.0.0.1:8000/api/get_user/data/', {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               })
+               .then((response) => {
+                  this.$store.commit('setUser', response.data);
             });
-        },
+         },
+  },
 
     }
 </script>
