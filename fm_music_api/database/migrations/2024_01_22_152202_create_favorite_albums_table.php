@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('favorite_artists', function (Blueprint $table) {
+        Schema::create('favorite_albums', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('album_name');
+            $table->string('artist_name');
+            $table->json('album_info');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('favorite_artists');
+        Schema::dropIfExists('favorite_albums');
     }
 };

@@ -14,6 +14,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/api/albums/search',
+        '/api/favorite/albums',
+        'api/favorite/artists',
         '/login/*',
         '/api/albums/show',
     ];

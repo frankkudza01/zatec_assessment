@@ -64,3 +64,20 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## System Setup
+
+1) Configure a .env file
+
+
+2) generate application jwt secret code
+    php artisan jwt:generate
+
+3) Disable vendor gruzzle ssl verification
+        open vendor\guzzlehttp\guzzle\src\Handler\CurlFactory.php
+        $conf[CURLOPT_SSL_VERIFYHOST] = 0;
+        $conf[CURLOPT_SSL_VERIFYPEER] = FALSE;
+
+
+

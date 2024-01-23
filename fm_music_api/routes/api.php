@@ -16,6 +16,7 @@ use App\Http\Controllers\Albums\AlbumController;
 */
 Route::post('/login/user/', [App\Http\Controllers\Authentication\AuthController::class, 'login'])->name('/login/user/');
 Route::get('/login/google/', [App\Http\Controllers\Authentication\AuthController::class, 'redirectToGoogle'])->name('/login/google/');
+Route::get('/login/google/callback/', [App\Http\Controllers\Authentication\AuthController::class, 'handleGoogleCallback'])->name('/login/google/callback/');
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -38,11 +39,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/favorite/artists/{id}', [ArtistController::class, 'unfavoriteArtist']);
     Route::get('/favorite/artists', [ArtistController::class, 'getFavoriteArtists']);
 
-    Route::post('/favorite/albums', [AlbumController::class, 'favoriteAlbum']);
-    Route::get('/favorite/albums', [AlbumController::class, 'getFavoriteAlbums']);
+    Route::post('/favorite/albums/', [AlbumController::class, 'favoriteAlbum']);
+    Route::get('/favorite/albums/', [AlbumController::class, 'getFavoriteAlbums']);
     Route::delete('/favorite/albums/{id}', [AlbumController::class, 'unfavoriteAlbum']);
-
-    Route::get('/login/google/callback/', [App\Http\Controllers\Authentication\AuthController::class, 'handleGoogleCallback'])->name('/login/google/callback/');
 
 
     Route::get('/get_user/data/', [App\Http\Controllers\Authentication\AuthController::class, 'getUser'])->name('/get_user/data/');

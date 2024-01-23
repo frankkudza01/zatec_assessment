@@ -27,19 +27,28 @@ export default{
     },
 
     mounted() {
-        this.fetchUser();
+        // Fetch the user data from the server using the JWT token
+        this.fetchUserData();
     },
 
     methods: {
-        fetchUser() {
-        // Make an API request to fetch the user data and JWT token
-        axios.get('http://127.0.0.1:8000/api/login/google/callback/').then((response) => {
-            const { user, access_token } = response.data;
-            this.user = user;
-            // Store the token in local storage or a cookie for subsequent requests
-            // You can use a JWT library (e.g., jwt-decode) to extract information from the token
-            localStorage.setItem('token', access_token);
-        });
+        fetchUserData() {
+        // Retrieve the JWT token from the Vuex store
+        const token = this.$store.state.token;
+
+        // Send a request to the Laravel backend to fetch the user data
+        axios
+            .get('http://localhost:8000/api/get_user/data/', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            })
+            .then((response) => {
+            this.user = response.data;
+            })
+            .catch((error) => {
+            console.error(error);
+            });
         },
     },
 

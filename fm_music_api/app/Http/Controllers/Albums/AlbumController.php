@@ -34,6 +34,8 @@ class AlbumController extends Controller
         return response()->json($album);
     }
 
+    
+
     public function favoriteAlbum(Request $request)
     {
         $userId = $request->user()->id;
