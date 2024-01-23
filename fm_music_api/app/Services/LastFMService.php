@@ -5,6 +5,7 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use Barryvanveen\Lastfm\Lastfm;
 use GuzzleHttp\Exception\ClientException;
+use Illuminate\Support\Facades\Config;
 
 class LastFmService
 {
@@ -15,11 +16,12 @@ class LastFmService
     public function __construct()
     {
         $this->client = new Client([
-            'base_uri' => 'https://ws.audioscrobbler.com/2.0/',
+            'base_uri' => Config::get('services.lastfm.base_url'),
         ]);
-        $this->apiKey = '286b3395c6f4c8604dbb38579fd26b7a';
-        $this->sharedSecret = '9581923240aae739926b0100121becda';
+        $this->apiKey = Config::get('services.lastfm.api_key');
+        $this->sharedSecret = Config::get('services.lastfm.shared_secret');
     }
+
 
     public function searchArtist($artist)
     {

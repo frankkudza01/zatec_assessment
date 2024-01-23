@@ -36,11 +36,15 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        // Get the artist data from the request
-        $artistData = $request->all();
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'genre' => 'required|string',
+            // Add more validation rules for other fields if needed
+        ]);
 
         // Create a new artist in the Last.fm API using $this->lastFmService
-        $createdArtist = $this->lastFmService->createArtist($artistData);
+        $createdArtist = $this->lastFmService->createArtist($validatedData);
 
         // Return the created artist
         return response()->json($createdArtist, 201);
@@ -68,11 +72,15 @@ class ArtistController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Get the artist data from the request
-        $artistData = $request->all();
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'genre' => 'required|string',
+            // Add more validation rules for other fields if needed
+        ]);
 
         // Update a specific artist in the Last.fm API using $this->lastFmService
-        $updatedArtist = $this->lastFmService->updateArtist($id, $artistData);
+        $updatedArtist = $this->lastFmService->updateArtist($id, $validatedData);
 
         // If the artist is not found, return an error response
         if (!$updatedArtist) {

@@ -37,4 +37,10 @@ return [
         'redirect'      => env('GOOGLE_REDIRECT_URL')
     ],
 
+    'lastfm' => [
+        'api_key' => env('LASTFM_API_KEY'),
+        'shared_secret' => env('LASTFM_SHARED_SECRET'),
+        'base_url' => env('LASTFM_BASE_URL'),
+    ],
+
 ];
