@@ -79,5 +79,14 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
         $conf[CURLOPT_SSL_VERIFYHOST] = 0;
         $conf[CURLOPT_SSL_VERIFYPEER] = FALSE;
 
+4) Run npm install 
+
+5) configure the api vatriables in .env
+
+6) run migrations
+    php artisan migrate
+
+7) run the application
+
 
 
