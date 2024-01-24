@@ -34,9 +34,8 @@ class AuthController extends Controller
 
     public function handleGoogleCallback()
     {
-   
         $googleUser = Socialite::driver('google')->stateless()->user();
-        
+
         // Check if the user already exists in the database
         $existingUser = User::where('email', $googleUser->email)->first();
 
@@ -58,21 +57,17 @@ class AuthController extends Controller
 
         // Generate a JWT token for the user
         $token = JWTAuth::fromUser($existingUser);
-        
 
-        // Redirect the user to the Vue frontend dashboard URL with the token and user data as query parameters
-       return response()->json(['access_token' => $token]);
+        // Redirect the user to the Vue frontend dashboard URL with the token as a query parameter
+        return redirect('http://localhost:8080/dashboard?token=' . $token);
     }
 
     public function getUser()
     {
         $user = Auth::user();
 
-        if ($user) {
-            return response()->json(['user' => $user]);
-        } else {
-            return response()->json(['user' => null]);
-        }
+        return response()->json(['user'=>$user]);
+        
     }
 
     public function logout(Request $request)
