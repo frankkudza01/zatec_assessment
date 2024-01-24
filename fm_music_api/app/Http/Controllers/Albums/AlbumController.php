@@ -17,11 +17,11 @@ class AlbumController extends Controller
 
     public function search(Request $request)
     {
-        $albumName = $request->input('album_name');
+        $albumName = $request->query('album_name');
 
         $albums = $this->albumsService->searchAlbums($albumName);
 
-        return response()->json($albums);
+        return response()->json(['albums' => $albums]);
     }
 
     public function show(Request $request)

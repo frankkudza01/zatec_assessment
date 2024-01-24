@@ -31,8 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
     
 
     Route::prefix('albums')->group(function () {
-        Route::post('/search', [AlbumController::class, 'search']);
-        Route::post('/show', [AlbumController::class, 'show']);
+        Route::get('/search', [AlbumController::class, 'search']);
+        Route::get('/show', [AlbumController::class, 'show']);
     });
 
     Route::post('/favorite/artists', [ArtistController::class, 'favoriteArtist']);
