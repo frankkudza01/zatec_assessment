@@ -18,6 +18,7 @@ Route::post('/login/user/', [App\Http\Controllers\Authentication\AuthController:
 Route::get('/login/google/', [App\Http\Controllers\Authentication\AuthController::class, 'redirectToGoogle'])->name('/login/google/');
 Route::get('/login/google/callback/', [App\Http\Controllers\Authentication\AuthController::class, 'handleGoogleCallback'])->name('/login/google/callback/');
 
+Route::get('/albums/albums', [AlbumController::class, 'index']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('artists')->group(function () {
@@ -31,8 +32,8 @@ Route::group(['middleware' => 'auth'], function () {
     
 
     Route::prefix('albums')->group(function () {
-        Route::get('/search', [AlbumController::class, 'search']);
-        Route::get('/show', [AlbumController::class, 'show']);
+        Route::post('/search', [AlbumController::class, 'search']);
+        Route::post('/show', [AlbumController::class, 'show']);
     });
 
     Route::post('/favorite/artists', [ArtistController::class, 'favoriteArtist']);

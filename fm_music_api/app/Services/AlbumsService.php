@@ -41,6 +41,31 @@ class AlbumsService
         return $albums;
     }
 
+    public function getAllAlbums()
+    {
+        $response = $this->client->request('GET', '', [
+            'query' => [
+                'method' => 'album.search',
+                'album' => '',  // Add the album parameter for specific album search
+                'api_key' => $this->apiKey,
+                'format' => 'json',
+                'limit' => 1000,
+            ],
+        ]);
+
+        $data = json_decode($response->getBody(), true);
+        
+        // Extract the relevant information from the response
+        if (isset($data['results']['albummatches']['album'])) {
+            $albums = $data['results']['albummatches']['album'];
+            $albumNames = array_column($albums, 'name');
+
+            return response()->json($albumNames);
+        } else {
+            return response()->json(['error' => 'Error occurred while retrieving the album list.']);
+        }
+    }
+
     public function getAlbumInfo($albumName, $artistName)
     {
         $response = $this->client->request('POST', '', [
@@ -61,5 +86,4 @@ class AlbumsService
         return $album;
     }
 
-    
 }

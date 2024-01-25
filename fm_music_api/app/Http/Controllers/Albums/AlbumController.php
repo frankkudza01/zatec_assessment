@@ -15,6 +15,17 @@ class AlbumController extends Controller
         $this->albumsService = $albumsService;
     }
 
+
+    public function index()
+    {
+        try {
+            $albums = $this->albumsService->getAllAlbums();
+            return response()->json($albums);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
     public function search(Request $request)
     {
         $albumName = $request->query('album_name');
@@ -35,7 +46,6 @@ class AlbumController extends Controller
     }
 
     
-
     public function favoriteAlbum(Request $request)
     {
         $userId = $request->user()->id;
