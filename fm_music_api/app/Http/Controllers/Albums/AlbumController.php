@@ -28,7 +28,7 @@ class AlbumController extends Controller
 
     public function search(Request $request)
     {
-        $albumName = $request->query('album_name');
+        $albumName = $request->input('album_name');
 
         $albums = $this->albumsService->searchAlbums($albumName);
 
