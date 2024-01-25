@@ -1,0 +1,30 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  laravel:
+    build:
+      context: .
+      dockerfile: Dockerfile.laravel
+    ports:
+      - 8000:8000
+    depends_on:
+      - database
+
+  vuejs:
+    build:
+      context: .
+      dockerfile: Dockerfile.vue
+    ports:
+      - 8080:8080
+
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - 3306:3306
