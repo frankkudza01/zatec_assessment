@@ -22,6 +22,7 @@ Route::get('/login/google/callback/', [App\Http\Controllers\Authentication\AuthC
 Route::group(['middleware' => 'auth'], function () {
     Route::prefix('artists')->group(function () {
         Route::get('/', [ArtistController::class, 'index']);
+        Route::get('/track/{artist}/{track}', [ArtistController::class, 'getTrackInfo']);
         Route::post('/', [ArtistController::class, 'store']);
         Route::get('/{id}', [ArtistController::class, 'show']);
         Route::put('/{id}', [ArtistController::class, 'update']);

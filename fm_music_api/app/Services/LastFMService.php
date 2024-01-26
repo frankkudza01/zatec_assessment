@@ -23,6 +23,8 @@ class LastFmService
     }
 
 
+    // Search artist by name
+
     public function searchArtist($artist)
     {
         $response = $this->client->post('', [
@@ -37,6 +39,7 @@ class LastFmService
         return json_decode($response->getBody(), true);
     }
 
+    // Get all artists
    
     public function getAllArtists()
     {
@@ -63,6 +66,27 @@ class LastFmService
         }
     }
 
+    // Get track info
+    public function getTrackInfo($artist, $track)
+    {
+        $response = $this->client->get('track.getInfo', [
+            'query' => [
+                'method' => 'track.getInfo',
+                'artist' => $artist,
+                'track' => $track,
+                'api_key' => $this->apiKey,
+                'format' => 'json',
+            ],
+        ]);
+
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        // Process the response data as needed
+
+        return response()->json($data);
+    }
+
+    
 
     public function createArtist($artistData)
     {

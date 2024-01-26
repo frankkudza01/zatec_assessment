@@ -30,6 +30,15 @@ class ArtistController extends Controller
 
     }
 
+    public function getTrackInfo($artist, $track)
+    {
+        // Retrieve track information from the Last.fm API using $this->lastFmService
+        $trackInfo = $this->lastFmService->getTrackInfo($artist, $track);
+
+        // Return the retrieved track information
+        return response()->json($trackInfo);
+    }
+
 
     /**
      * Store a newly created resource in storage.
