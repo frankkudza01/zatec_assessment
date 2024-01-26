@@ -25,7 +25,7 @@ class LastFmService
 
     public function searchArtist($artist)
     {
-        $response = $this->client->get('', [
+        $response = $this->client->post('', [
             'query' => [
                 'method' => 'artist.search',
                 'artist' => $artist,

@@ -114,13 +114,13 @@ class ArtistController extends Controller
 
     public function searchArtist(Request $request)
     {
-        $searchTerm = $request->input('searchTerm');
+        $searchTerm = $request->input('name');
 
         // Search for artists in the Last.fm API using $this->lastFmService
         $results = $this->lastFmService->searchArtist($searchTerm);
 
         // Process and return the search results
-        return response()->json($results);
+        return response()->json(['artists'=>$results]);
     }
 
     public function favoriteArtist(Request $request)

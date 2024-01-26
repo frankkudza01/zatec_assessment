@@ -26,7 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/{id}', [ArtistController::class, 'show']);
         Route::put('/{id}', [ArtistController::class, 'update']);
         Route::delete('/{id}', [ArtistController::class, 'destroy']);
-        Route::get('/search', [ArtistController::class, 'searchArtist']);
+        Route::post('/search', [ArtistController::class, 'searchArtist']);
+        
     });
     
     Route::prefix('albums')->group(function () {

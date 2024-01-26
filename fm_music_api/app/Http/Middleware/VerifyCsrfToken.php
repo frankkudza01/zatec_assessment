@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         '/api/albums/search',
         '/api/favorite/albums',
         'api/favorite/artists',
+        'api/artists/search',
         '/login/*',
         '/api/albums/show',
     ];
