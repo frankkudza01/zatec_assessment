@@ -81,7 +81,7 @@
                              </router-link>
                              
                              <div class="d-inline-block w-100 text-center p-3">
-                                <a class="bg-primary iq-sign-btn" href="" role="button">Sign out<i class="ri-login-box-line ml-2"></i></a>
+                                <button class="bg-primary iq-sign-btn" @click="logout" role="button">Sign out<i class="ri-login-box-line ml-2"></i></button>
                              </div>
                           </div>
                        </div>
@@ -127,6 +127,27 @@ import axios from 'axios';
                })
                .catch((error) => {
                   console.error('Error fetching user:', error);
+               });
+         },
+
+
+         logout() {
+            const token = this.$store.state.token;
+
+            axios
+               .post('http://127.0.0.1:8000/api/logout/user/', null, {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+               })
+               .then(() => {
+               // Clear the token from the store and perform any other necessary actions
+               this.$store.commit('setToken', null);
+               // Redirect the user to the login page or any other desired page
+               this.$router.push('/login');
+               })
+               .catch((error) => {
+               console.error('Error logging out:', error);
                });
          },
   },
