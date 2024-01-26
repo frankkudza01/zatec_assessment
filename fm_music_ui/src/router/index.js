@@ -6,7 +6,7 @@ import ProfileView from '@/views/ProfileView'
 import TracksView from '@/views/TracksView'
 import SigninView from '@/views/SigninView'
 import SignupView from '@/views/SignupView'
-import store from '@/store'
+
 
 const routes = [
   {
@@ -14,6 +14,7 @@ const routes = [
     name: 'signin',
     component: SigninView
   },
+
 
   {
     path: '/signup',
@@ -25,52 +26,53 @@ const routes = [
     path: '/profile',
     name: 'profile',
     component: ProfileView,
-    meta: { requiresAuth: true },
+    
   },
 
   {
     path: '/dashboard',
-    name: 'dashboard',
+    name: '/dashboard',
     component: DashboardView,
-    meta: { requiresAuth: true },
+    
   },
 
   {
     path: '/tracks',
     name: 'tracks',
     component: TracksView,
-    meta: { requiresAuth: true },
+    
   },
 
   {
     path: '/albums',
     name: 'albums',
     component: AlbumsView,
-    meta: { requiresAuth: true },
+    
   },
 
   {
     path: '/artists',
     name: 'artists',
     component: ArtistsView,
-    meta: { requiresAuth: true },
+    
   },
  
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 });
 
 router.beforeEach((to, from, next) => {
-  const token = store.state.token;
-  if (to.matched.some((record) => record.meta.requiresAuth) && !token) {
-    // Redirect to the sign-in page if the route requires authentication and there's no token
-    next('/');
+  const token = localStorage.getItem('token');
+
+  if (to.meta.requiresAuth && !token) {
+    // Redirect to login or unauthorized page if authentication is required but token is missing
+    next('/login');
   } else {
     next();
   }
 });
 
-export default router
+export default router;

@@ -48,8 +48,9 @@
                     <a href="#" class="search-toggle iq-waves-effect d-flex align-items-center">
                        
                        <div class="caption">
-                          <h6 class="mb-0 line-height">{{ user ? user.name : 'Not logged in' }}</h6>
-                          <p class="mb-0" v-if="user">Email: {{ user.email }}</p>
+                          <h6 class="mb-0 line-height" v-if="user && user.name">{{ user.name }}</h6>
+                          <h6 class="mb-0 line-height" v-else>No Name</h6>
+                          <p class="mb-0" v-if="user">Online</p>
                        </div>
                     </a>
                     <div class="iq-sub-dropdown iq-user-dropdown">
@@ -103,14 +104,10 @@ import axios from 'axios';
             return {
                 LogoPath: icon,
                 divWidth: 40,
+                user: null,
             };
         },
 
-        computed: {
-            user() {
-               return this.$store.state.user;
-            },
-         },
          mounted() {
             this.fetchUser();
          },
@@ -126,8 +123,11 @@ import axios from 'axios';
                   },
                })
                .then((response) => {
-                  this.$store.commit('setUser', response.data);
-            });
+                  this.user = response.data.user;
+               })
+               .catch((error) => {
+                  console.error('Error fetching user:', error);
+               });
          },
   },
 
